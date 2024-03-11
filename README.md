@@ -61,7 +61,7 @@ the new model.
 The custom Image model, `CaptionedImage`, adds four new fields to the Wagtail Image model: `alt`, `caption`, `credit`, `iptc_data`. When a new image is uploaded via Wagtail's media library, the app will attempt to extract any IPTC meta data found in the file and fill
 the `alt`, `caption` and `credit` fields. All IPTC meta data  extracted is also stored in `iptc_data`.
 
-This fork adds the mentioned custom Image model, `CaptionExifImage`, which,  in addition to the extra fields above, adds `camera_make`, `camera_model`, `lens_make`, `lens_model`, `aperture`, `shutter_speed`, `iso_rating`, and if present, `latitude` and `longitude`. All extracted EXIF information is also stored as JSON in the `exif_data` field.
+This fork adds the mentioned custom Image model, `CaptionedExifImage`, which,  in addition to the extra fields above, adds `camera_make`, `camera_model`, `lens_make`, `lens_model`, `aperture`, `shutter_speed`, `iso_rating`, and if present, `latitude` and `longitude`. All extracted EXIF information is also stored as JSON in the `exif_data` field.
 
 Example use in a template:
 
