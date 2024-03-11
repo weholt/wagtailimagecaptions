@@ -12,3 +12,4 @@ media/*
 *.log
 *.pyc
 *.sqlite3
+_test*

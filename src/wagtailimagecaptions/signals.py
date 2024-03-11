@@ -6,7 +6,7 @@ from django.utils.html import linebreaks
 from django.utils.text import Truncator
 from wagtail.images import get_image_model_string
 
-from .services import parse_iptc
+from .services import parse_exif, parse_iptc
 
 IMAGE_MODEL = get_image_model_string()
 
@@ -57,3 +57,42 @@ def parse_image_meta(sender, **kwargs):
         instance.copyright_notice = trimmed_copyright
 
     instance.iptc_data = meta_dict
+
+    if hasattr(instance, "exif_data"):
+        exif_data = parse_exif(instance.file)
+
+        def string_clean_up(s: str) -> str:
+            return Truncator(s.strip().rstrip("\x00")).chars(255)
+
+        if camera_make := exif_data.get("Make", None):
+            instance.camera_make = string_clean_up(camera_make)
+
+        if camera_model := exif_data.get("Model", None):
+            instance.camera_model = string_clean_up(camera_model)
+
+        if lens_make := exif_data.get("LensMake", None):
+            instance.lens_make = string_clean_up(lens_make)
+
+        if lens_model := exif_data.get("LensModel", None):
+            instance.lens_model = string_clean_up(lens_model)
+
+        if focal_length := exif_data.get("FocalLength", None):
+            instance.focal_length = string_clean_up(focal_length)
+
+        if shutter_speed := exif_data.get("ExposureTime", None):
+            instance.shutter_speed = string_clean_up(shutter_speed)
+
+        if aperture := exif_data.get("ApertureValue", None):
+            aperture_float = float(aperture)
+            instance.aperture = f"f/{aperture_float:.2f}"
+
+        if iso_rating := exif_data.get("ISOSpeedRatings", None):
+            instance.iso_rating = f"{iso_rating}ISO"
+
+        if latitude := exif_data.get("latitude"):
+            instance.latitude = latitude
+
+        if longitude := exif_data.get("longitude"):
+            instance.longitude = longitude
+
+        instance.exif_data = exif_data

@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "wagtail.contrib.routable_page",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
-    "wagtail.contrib.modeladmin",
     "wagtail.contrib.settings",
     "wagtail.embeds",
     "wagtail.sites",
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     "modelcluster",
     "taggit",
     "wagtailimagecaptions",
+    "image_viewer"
 ]
 
 MIDDLEWARE = [
@@ -145,5 +145,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 WAGTAILADMIN_BASE_URL = "http://localhost/"
 WAGTAIL_SITE_NAME = "Test Project"
 
-WAGTAILIMAGES_IMAGE_MODEL = "wagtailimagecaptions.CaptionedImage"
+WAGTAILIMAGES_IMAGE_MODEL = "wagtailimagecaptions.CaptionedExifImage"
 WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH = "%Y/%m"
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 30  # 30M
+FILE_UPLOAD_MAX_MEMORY_SIZE = DATA_UPLOAD_MAX_MEMORY_SIZE
+WAGTAILIMAGES_MAX_UPLOAD_SIZE = DATA_UPLOAD_MAX_MEMORY_SIZE
