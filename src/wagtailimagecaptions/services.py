@@ -179,6 +179,9 @@ def parse_exif(image_file: ImageFile):
     try:
         image = PILImage.open(image_file)
         exif_data_PIL = image._getexif()
+        if not exif_data_PIL:
+            return {}
+
         tags = {**PIL.ExifTags.TAGS}
         exif_data = {}
 
