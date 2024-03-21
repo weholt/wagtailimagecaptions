@@ -62,7 +62,7 @@ def parse_image_meta(sender, **kwargs):
         exif_data = parse_exif(instance.file)
 
         def string_clean_up(s: str) -> str:
-            return Truncator(s.strip().rstrip("\x00")).chars(255)
+            return isinstance(s, str) and Truncator(s.strip().rstrip("\x00")).chars(255) or s
 
         if camera_make := exif_data.get("Make", None):
             instance.camera_make = string_clean_up(camera_make)
