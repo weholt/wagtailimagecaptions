@@ -37,8 +37,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="captionedimage",
             name="credit",
-            field=models.CharField(
-                blank=True, help_text="The name of the provider (e.g. AP, Getty, Reuters).", max_length=255
-            ),
+            field=models.CharField(blank=True, help_text="The name of the provider (e.g. AP, Getty, Reuters).", max_length=255),
         ),
     ]

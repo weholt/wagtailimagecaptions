@@ -133,6 +133,7 @@ def parse_exif(image_file: ImageFile):
         processed: the raw data if it is human-readable,
         or a processed version if not.
     """
+
     def clean_up_exif_dict(exif_dict: dict) -> dict:
         def cast(v):
             if isinstance(v, TiffImagePlugin.IFDRational):
@@ -192,7 +193,7 @@ def parse_exif(image_file: ImageFile):
             exif_data[v] = {"tag": k, "raw": value, "processed": value}
 
         lat, lon = get_lat_lon(exif_data_PIL)
-        exif_data.update({"latitude": {'processed': lat}, "longitude": {'processed': lon}})
+        exif_data.update({"latitude": {"processed": lat}, "longitude": {"processed": lon}})
         exif_data = _process_exif_dict(exif_data)
         return clean_up_exif_dict(exif_data)
     except IOError as ioe:
@@ -252,12 +253,8 @@ def _process_exif_dict(exif_dict: dict, date_format: str = "%Y:%m:%d %H:%M:%S"):
 
     try:
         exif_dict["DateTime"]["processed"] = datetime.datetime.strptime(exif_dict["DateTime"]["raw"], date_format)
-        exif_dict["DateTimeOriginal"]["processed"] = datetime.datetime.strptime(
-            exif_dict["DateTimeOriginal"]["raw"], date_format
-        )
-        exif_dict["DateTimeDigitized"]["processed"] = datetime.datetime.strptime(
-            exif_dict["DateTimeDigitized"]["raw"], date_format
-        )
+        exif_dict["DateTimeOriginal"]["processed"] = datetime.datetime.strptime(exif_dict["DateTimeOriginal"]["raw"], date_format)
+        exif_dict["DateTimeDigitized"]["processed"] = datetime.datetime.strptime(exif_dict["DateTimeDigitized"]["raw"], date_format)
         exif_dict["FNumber"]["processed"] = _derationalize(exif_dict["FNumber"]["raw"])
         exif_dict["FNumber"]["processed"] = "f{}".format(exif_dict["FNumber"]["processed"])
         exif_dict["MaxApertureValue"]["processed"] = _derationalize(exif_dict["MaxApertureValue"]["raw"])
@@ -272,9 +269,7 @@ def _process_exif_dict(exif_dict: dict, date_format: str = "%Y:%m:%d %H:%M:%S"):
         exif_dict["XResolution"]["processed"] = int(_derationalize(exif_dict["XResolution"]["raw"]))
         exif_dict["YResolution"]["processed"] = int(_derationalize(exif_dict["YResolution"]["raw"]))
         exif_dict["ExposureTime"]["processed"] = _derationalize(exif_dict["ExposureTime"]["raw"])
-        exif_dict["ExposureTime"]["processed"] = str(
-            Fraction(exif_dict["ExposureTime"]["processed"]).limit_denominator(8000)
-        )
+        exif_dict["ExposureTime"]["processed"] = str(Fraction(exif_dict["ExposureTime"]["processed"]).limit_denominator(8000))
         exif_dict["ExposureBiasValue"]["processed"] = _derationalize(exif_dict["ExposureBiasValue"]["raw"])
         exif_dict["ExposureBiasValue"]["processed"] = "{} EV".format(exif_dict["ExposureBiasValue"]["processed"])
     except TypeError as ex:

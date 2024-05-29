@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "modelcluster",
     "taggit",
     "wagtailimagecaptions",
-    "image_viewer"
+    "image_viewer",
 ]
 
 MIDDLEWARE = [

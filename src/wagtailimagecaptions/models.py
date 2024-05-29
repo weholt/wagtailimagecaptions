@@ -75,10 +75,7 @@ class CaptionedImage(AbstractImage):
         """Overrides the `get_upload_to` method to include set date paths."""
         folder_name = "original_images"
 
-        if (
-            hasattr(settings, "WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH")
-            and settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH
-        ):
+        if hasattr(settings, "WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH") and settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH:
             now = timezone.now()
             date_path = now.strftime(settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH)
             folder_name = os.path.join(folder_name, date_path)
@@ -110,10 +107,7 @@ class CaptionedRendition(AbstractRendition):
 
     def get_upload_to(self, filename):
         """Overrides the `get_upload_to` method to include set date paths."""
-        if (
-            hasattr(settings, "WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH")
-            and settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH
-        ):
+        if hasattr(settings, "WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH") and settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH:
             now = timezone.now()
             date_path = now.strftime(settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH)
             filename = self.file.field.storage.get_valid_name(filename)
@@ -131,9 +125,7 @@ class CaptionedExifImage(CaptionedImage):
     """
 
     exif_data = models.JSONField(null=True, blank=True, encoder=DateTimeEncoder)
-    date_time_original = models.DateTimeField(
-        null=True, blank=True, help_text="The date and time of creation of the image (EXIF DateTimeOriginal)"
-    )
+    date_time_original = models.DateTimeField(null=True, blank=True, help_text="The date and time of creation of the image (EXIF DateTimeOriginal)")
 
     camera_make = models.CharField(
         max_length=255,
@@ -206,10 +198,7 @@ class CaptionedExifRendition(AbstractRendition):
 
     def get_upload_to(self, filename):
         """Overrides the `get_upload_to` method to include set date paths."""
-        if (
-            hasattr(settings, "WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH")
-            and settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH
-        ):
+        if hasattr(settings, "WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH") and settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH:
             now = timezone.now()
             date_path = now.strftime(settings.WAGTIALIMAGECAPTIONS_UPLOAD_TO_DATE_PATH)
             filename = self.file.field.storage.get_valid_name(filename)

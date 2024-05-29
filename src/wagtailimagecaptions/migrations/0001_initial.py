@@ -45,9 +45,7 @@ class Migration(migrations.Migration):
                 ("file_hash", models.CharField(blank=True, db_index=True, editable=False, max_length=40)),
                 (
                     "alt",
-                    models.CharField(
-                        blank=True, help_text="Set the image alt text used for accessibility.", max_length=255
-                    ),
+                    models.CharField(blank=True, help_text="Set the image alt text used for accessibility.", max_length=255),
                 ),
                 ("caption", wagtail.fields.RichTextField(blank=True, help_text="Set the image caption.", null=True)),
                 ("credit", models.CharField(blank=True, help_text="Set the image credit.", max_length=255)),
@@ -64,9 +62,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "tags",
-                    taggit.managers.TaggableManager(
-                        blank=True, help_text=None, through="taggit.TaggedItem", to="taggit.Tag", verbose_name="tags"
-                    ),
+                    taggit.managers.TaggableManager(blank=True, help_text=None, through="taggit.TaggedItem", to="taggit.Tag", verbose_name="tags"),
                 ),
                 (
                     "uploaded_by_user",
